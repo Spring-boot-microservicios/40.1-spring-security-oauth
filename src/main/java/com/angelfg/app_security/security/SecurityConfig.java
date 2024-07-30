@@ -23,11 +23,26 @@ public class SecurityConfig {
 //    }
 
     // 2 - Cualquier request permitir sin autenticacion
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//
+//        http.authorizeHttpRequests(auth ->
+//            auth.anyRequest().permitAll()
+//        )
+//        .formLogin(Customizer.withDefaults())
+//        .httpBasic(Customizer.withDefaults());
+//
+//        return http.build();
+//    }
+
+    // 3 - Protege "/loans", "/balance", "/accounts", "/cards" excepto los demas
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(auth ->
-            auth.anyRequest().permitAll()
+            auth.requestMatchers("/loans", "/balance", "/accounts", "/cards").authenticated()
+                // .requestMatchers("/welcome", "/about").permitAll() => permite rutas especificas
+                .anyRequest().permitAll()
         )
         .formLogin(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults());
