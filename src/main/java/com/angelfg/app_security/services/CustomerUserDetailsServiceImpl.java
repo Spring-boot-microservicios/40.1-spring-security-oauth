@@ -1,22 +1,24 @@
 package com.angelfg.app_security.services;
 
-import com.angelfg.app_security.repositories.CustomerRepository;
+//import com.angelfg.app_security.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.User;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+//import java.util.List;
 
 @Service
 @Transactional
 @AllArgsConstructor
-public class CustomerUserDetailsServiceImpl implements UserDetailsService {
+public class CustomerUserDetailsServiceImpl /*implements UserDetailsService*/ {
 
+    // LA LOGICA DE NEGOCIOS AHORA LA DEJAMOS EN EL AUTHENTICATION_PROVIDERS
+    /*
     private final CustomerRepository customerRepository;
 
     // Uso de UserDetailsService para realizar nuestra propia implementacion de seguridad
@@ -28,5 +30,6 @@ public class CustomerUserDetailsServiceImpl implements UserDetailsService {
                     return new User(customer.getEmail(), customer.getPassword(), authorities);
                 }).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
+    */
 
 }
