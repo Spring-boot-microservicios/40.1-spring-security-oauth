@@ -80,15 +80,17 @@ public class SecurityConfig {
 
     // Para pruebas de spring security para no codificar la contraseña
     // No se debe de realizar
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return NoOpPasswordEncoder.getInstance();
+//    }
 
     // Uso de JDBC con ayuda del JPA para cargar el dataSource de spring
 //    @Bean
 //    public UserDetailsService userDetailsService(DataSource dataSource) {
 //        return new JdbcUserDetailsManager(dataSource);
 //    }
+
+
 
 }
