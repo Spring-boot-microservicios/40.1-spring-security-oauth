@@ -3,16 +3,16 @@ package com.angelfg.app_security.security;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-@Component
-public class MyPasswordEncoder implements PasswordEncoder {
+//@Component
+public class MyPasswordEncoder /*implements PasswordEncoder*/ {
 
     // Hasheamos nuestras propias contraseñas
-    @Override
+    // @Override
     public String encode(CharSequence rawPassword) {
         return String.valueOf(rawPassword.toString().hashCode());
     }
 
-    @Override
+    // @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
         String passwordAsString = String.valueOf(rawPassword.toString().hashCode());
         return encodedPassword.equals(passwordAsString);
