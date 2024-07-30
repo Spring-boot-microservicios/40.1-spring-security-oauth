@@ -86,9 +86,9 @@ public class SecurityConfig {
     }
 
     // Uso de JDBC con ayuda del JPA para cargar el dataSource de spring
-    @Bean
-    public UserDetailsService userDetailsService(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService(DataSource dataSource) {
+//        return new JdbcUserDetailsManager(dataSource);
+//    }
 
 }
