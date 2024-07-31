@@ -1,6 +1,7 @@
 package com.angelfg.app_security.components;
 
 import com.angelfg.app_security.entities.CustomerEntity;
+import com.angelfg.app_security.entities.RoleEntity;
 import com.angelfg.app_security.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -34,7 +36,11 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
         final String passwordFromDB = customerFromDB.getPassword();
 
         if (passwordEncoder.matches(password, passwordFromDB)) {
-            List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(customerFromDB.getRole()));
+//            List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(customerFromDB.getRole()));
+
+            List<RoleEntity> roles = customerFromDB.getRoles();
+            List<SimpleGrantedAuthority> authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+
             return new UsernamePasswordAuthenticationToken(username, password, authorities);
         } else {
             throw new BadCredentialsException("Invalid credentials - Password");
