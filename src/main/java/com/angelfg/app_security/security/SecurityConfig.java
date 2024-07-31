@@ -2,9 +2,12 @@ package com.angelfg.app_security.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 //import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -51,6 +54,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        // JWT sin estado
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         // Filter personalizado
         http.addFilterBefore(new ApiKeyFilter(), BasicAuthenticationFilter.class); // Que lo haga antes del proximo filtro
 
@@ -88,7 +94,7 @@ public class SecurityConfig {
         // Configuracion sobre CSRF
         http.csrf(csrf -> csrf
                 .csrfTokenRequestHandler(requestHandler)
-                .ignoringRequestMatchers("/welcome", "/about") // podemos ignorar los endpoints
+                .ignoringRequestMatchers("/welcome", "/about", "/authenticate") // podemos ignorar los endpoints
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         ).addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class); // se puede poner en constructor o instanciado
 
@@ -156,6 +162,12 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", corsConfiguration);
 
         return source;
+    }
+
+    // 5 - JWT AuthenticationManager para authentication BASIC
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 
 }
