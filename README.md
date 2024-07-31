@@ -13,3 +13,4 @@
 
 ### CORS & CSRF
 - Si realimos una peticion desde el Front con dominio `http://localhost:4200` a mi Backend al endpoint `http://localhost:8080/welcome` los cors van a denegar la peticion porque el dominio del front no se encuentra configurados en el backend
+- En Csrf se genera una cookie en los headers `XSRF-TOKEN=cfc8699a-114e-44e4-b463-bc930ac648c8` para evitar los ataques
