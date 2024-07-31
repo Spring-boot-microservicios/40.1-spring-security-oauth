@@ -54,8 +54,15 @@ public class SecurityConfig {
         requestHandler.setCsrfRequestAttributeName("_csrf");
 
         http.authorizeHttpRequests(auth ->
-            auth.requestMatchers("/loans", "/balance", "/accounts", "/cards").authenticated()
-                // .requestMatchers("/welcome", "/about").permitAll() => permite rutas especificas
+            // auth.requestMatchers("/loans", "/balance", "/accounts", "/cards").authenticated()
+            // .requestMatchers("/welcome", "/about").permitAll() => permite rutas especificas
+
+                // Privilegios
+                auth.requestMatchers("/loans").hasAuthority("VIEW_LOANS")
+                    .requestMatchers("/balance").hasAuthority("VIEW_BALANCE")
+                    .requestMatchers("/cards").hasAuthority("VIEW_CARDS")
+                    .requestMatchers("/accounts").hasAnyAuthority("VIEW_ACCOUNT", "VIEW_CARDS")
+
                 .anyRequest().permitAll()
         )
         .formLogin(Customizer.withDefaults())
