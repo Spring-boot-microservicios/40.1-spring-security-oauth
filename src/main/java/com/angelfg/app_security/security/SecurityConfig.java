@@ -4,10 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -54,6 +58,9 @@ public class SecurityConfig {
 //        http.cors(AbstractHttpConfigurer::disable);
 //        http.csrf(AbstractHttpConfigurer::disable);
 
+        // Configuracion personalizada de CORS
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+
         return http.build();
     }
 
@@ -97,5 +104,27 @@ public class SecurityConfig {
 //    public PasswordEncoder passwordEncoder() {
 //        return new BCryptPasswordEncoder();
 //    }
+
+    // CORS
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+        // Permitir dominios
+        // corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:8080"));
+        corsConfiguration.setAllowedOrigins(List.of("*")); // Cualquier dominio esta permitido
+
+        // Permitir los tipos de request
+        // corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH"));
+        corsConfiguration.setAllowedMethods(List.of("*")); // Permite todos los request
+
+        corsConfiguration.setAllowedHeaders(List.of("*")); // Permite todos los headers
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // Protege toda mi aplicacion
+        source.registerCorsConfiguration("/**", corsConfiguration);
+
+        return source;
+    }
 
 }
