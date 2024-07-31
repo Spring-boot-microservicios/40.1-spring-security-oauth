@@ -7,3 +7,6 @@
 
 ### DATABASE BASE DE SPRING
 - `https://github.com/spring-projects/spring-security/blob/main/core/src/main/resources/org/springframework/security/core/userdetails/jdbc/users.ddl`
+
+### RECOMENDACIONES
+- Utilizar mejor el `UserDetailsService` que el `AuthenticationProvider` en los filtros de spring
