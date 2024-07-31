@@ -51,6 +51,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        // Filter personalizado
+        http.addFilterBefore(new ApiKeyFilter(), BasicAuthenticationFilter.class); // Que lo haga antes del proximo filtro
+
         // CSRF
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName("_csrf");
