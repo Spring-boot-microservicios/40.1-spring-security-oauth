@@ -3,6 +3,7 @@ package com.angelfg.app_security.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 @Configuration
+@EnableMethodSecurity // Habilita que podamos poner privilegios en los metodos service controller
 public class SecurityConfig {
 
     // 1 - Configuracion default
@@ -61,7 +63,7 @@ public class SecurityConfig {
                 auth.requestMatchers("/loans").hasAuthority("VIEW_LOANS")
                     .requestMatchers("/balance").hasAuthority("VIEW_BALANCE")
                     .requestMatchers("/cards").hasAuthority("VIEW_CARDS")
-                    .requestMatchers("/accounts").hasAnyAuthority("VIEW_ACCOUNT", "VIEW_CARDS")
+                    // .requestMatchers("/accounts").hasAnyAuthority("VIEW_ACCOUNT", "VIEW_CARDS")
 
                 .anyRequest().permitAll()
         )
