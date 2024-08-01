@@ -17,9 +17,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// Ya no dependemos de AuthenticationProvider sino de JWT
 @Component
 @AllArgsConstructor
-public class MyAuthenticationProvider implements AuthenticationProvider {
+public class MyAuthenticationProvider {} /*implements AuthenticationProvider {
 
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
@@ -54,3 +55,4 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     }
 
 }
+*/

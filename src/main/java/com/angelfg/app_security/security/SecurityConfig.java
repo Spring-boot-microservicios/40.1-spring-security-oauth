@@ -51,8 +51,9 @@ public class SecurityConfig {
 //    }
 
     // 3 - Protege "/loans", "/balance", "/accounts", "/cards" excepto los demas
+    // inyectamos el  JWTValidationFilter al filter
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JWTValidationFilter jwtValidationFilter) throws Exception {
 
         // JWT sin estado
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -83,6 +84,9 @@ public class SecurityConfig {
         )
         .formLogin(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults());
+
+        // Ingresamos nuestro filtro de JWT
+        http.addFilterAfter(jwtValidationFilter, BasicAuthenticationFilter.class);
 
         // Deshabilitar para no tener problemas en el navegador
 //        http.cors(AbstractHttpConfigurer::disable);
